@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ATH Management System - Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #071a2b;
+            --navy-light: #0c2940;
+            --red: #d71920;
+            --red-dark: #b91016;
+            --white: #ffffff;
+            --bg: #f4f7fa;
+            --text: #172333;
+            --muted: #718096;
+            --border: #e4e9ef;
+            --green: #16a085;
+            --blue: #2475d0;
+            --orange: #e58e26;
+            --purple: #7657d9;
+            --shadow: 0 8px 30px rgba(7, 26, 43, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 265px;
+            height: 100vh;
+            background: var(--navy);
+            color: white;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            height: 90px;
+            display: flex;
+            align-items: center;
+            padding: 18px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .sidebar-logo img {
+            width: 145px;
+            height: auto;
+            max-height: 55px;
+            object-fit: contain;
+            object-position: left center;
+        }
+
+        .sidebar-title {
+            padding: 24px 25px 10px;
+            color: #8ea1b4;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .navigation {
+            padding: 5px 13px 25px;
+        }
+
+        .nav-item {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #b8c6d4;
+            padding: 13px 14px;
+            margin-bottom: 4px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s ease;
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.07);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: var(--red);
+            color: white;
+            box-shadow: 0 7px 18px rgba(215,25,32,0.22);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding: 15px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .user-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+        }
+
+        .user-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .user-info {
+            min-width: 0;
+        }
+
+        .user-info strong {
+            display: block;
+            color: white;
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .user-info span {
+            color: #8194a7;
+            font-size: 10px;
+        }
+
+        .main {
+            margin-left: 265px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 82px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+        }
+
+        .page-heading h1 {
+            font-size: 22px;
+            color: var(--navy);
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .page-heading p {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #617285;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification:hover {
+            color: var(--red);
+            border-color: #f0c4c6;
+        }
+
+        .notification .dot {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+            border: 2px solid white;
+        }
+
+        .top-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 8px;
+        }
+
+        .top-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .top-user-text strong {
+            display: block;
+            font-size: 12px;
+            color: var(--navy);
+        }
+
+        .top-user-text span {
+            display: block;
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .content {
+            padding: 30px 35px 45px;
+        }
+
+        .welcome-box {
+            background: linear-gradient(120deg, #071a2b, #103a58);
+            border-radius: 15px;
+            padding: 27px 30px;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-box::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -70px;
+            top: -90px;
+            border: 35px solid rgba(255,255,255,0.04);
+            border-radius: 50%;
+        }
+
+        .welcome-box h2 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .welcome-box p {
+            color: #b7c7d7;
+            font-size: 12px;
+            line-height: 1.7;
+            max-width: 650px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 27px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(7,26,43,0.03);
+            transition: 0.25s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .stat-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+        }
+
+        .stat-icon.blue {
+            background: #eaf3ff;
+            color: var(--blue);
+        }
+
+        .stat-icon.red {
+            background: #fff0f1;
+            color: var(--red);
+        }
+
+        .stat-icon.green {
+            background: #e8f8f3;
+            color: var(--green);
+        }
+
+        .stat-icon.orange {
+            background: #fff5e8;
+            color: var(--orange);
+        }
+
+        .stat-change {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 5px 7px;
+            border-radius: 5px;
+            background: #eaf8f1;
+            color: #169568;
+        }
+
+        .stat-number {
+            font-size: 25px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .section-header h3 {
+            font-size: 16px;
+            color: var(--navy);
+            font-weight: 800;
+        }
+
+        .section-header span {
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .module-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            transform: translateY(-4px);
+            border-color: #cdd7e0;
+            box-shadow: var(--shadow);
+        }
+
+        .module-card.registration:hover {
+            border-color: #e7b6b8;
+        }
+
+        .module-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            margin-bottom: 15px;
+        }
+
+        .module-card h4 {
+            font-size: 13px;
+            color: var(--navy);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .module-card p {
+            font-size: 10px;
+            line-height: 1.55;
+            color: var(--muted);
+        }
+
+        .module-arrow {
+            position: absolute;
+            right: 16px;
+            bottom: 18px;
+            color: #aab5c0;
+            font-size: 11px;
+        }
+
+        .module-card:hover .module-arrow {
+            color: var(--red);
+        }
+
+        .icon-red {
+            background: #fff0f1;
+            color: var(--red);
+        }
+
+        .icon-blue {
+            background: #eaf3ff;
+            color: var(--blue);
+        }
+
+        .icon-green {
+            background: #e8f8f3;
+            color: var(--green);
+        }
+
+        .icon-orange {
+            background: #fff4e6;
+            color: var(--orange);
+        }
+
+        .icon-purple {
+            background: #f0ecff;
+            color: var(--purple);
+        }
+
+        .icon-cyan {
+            background: #e8f8fa;
+            color: #1596a6;
+        }
+
+        .lower-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .panel-header h3 {
+            font-size: 14px;
+            color: var(--navy);
+        }
+
+        .view-all {
+            border: none;
+            background: transparent;
+            color: var(--red);
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 12px 20px;
+            text-align: left;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: #8795a4;
+            background: #fafbfc;
+        }
+
+        td {
+            padding: 14px 20px;
+            border-top: 1px solid #edf0f3;
+            font-size: 10px;
+            color: #4d5c6b;
+        }
+
+        td strong {
+            color: var(--navy);
+            font-size: 10px;
+        }
+
+        .status {
+            display: inline-flex;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .status.active {
+            background: #e8f8f1;
+            color: #168c64;
+        }
+
+        .status.pending {
+            background: #fff5e6;
+            color: #c57a19;
+        }
+
+        .status.review {
+            background: #eeeaff;
+            color: #6e52c5;
+        }
+
+        .quick-actions {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .quick-action {
+            border: 1px solid var(--border);
+            background: #fbfcfd;
+            padding: 14px 12px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-family: inherit;
+            text-align: left;
+            transition: 0.2s ease;
+        }
+
+        .quick-action:hover {
+            border-color: #e5b4b6;
+            background: #fff8f8;
+        }
+
+        .quick-action-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 7px;
+            background: #fff0f1;
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .quick-action span {
+            font-size: 10px;
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .mobile-menu {
+            display: none;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            color: var(--navy);
+        }
+
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .module-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: 0.3s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .topbar {
+                padding: 0 20px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .module-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .lower-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .top-user-text {
+                display: none;
+            }
+
+            .page-heading h1 {
+                font-size: 18px;
+            }
+
+            .page-heading p {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-box {
+                padding: 22px;
+            }
+
+            .welcome-box h2 {
+                font-size: 18px;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+        <img src="ath-logo.png" alt="Aviation Training Hub">
+    </div>
+
+    <div class="sidebar-title">
+        Management System
+    </div>
+
+    <nav class="navigation">
+
+        <button class="nav-item active" onclick="showDashboard()">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Dashboard</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-inbox"></i>
+            <span>Enquiries</span>
+        </button>
+
+        <button class="nav-item" onclick="openRegistrationForm()">
+            <i class="fa-solid fa-user-plus"></i>
+            <span>Student Registration</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Programs and Modules</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span>Batches, Timetable & Attendance</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Fees and Accounts</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-file-lines"></i>
+            <span>Exams, Results & Transcripts</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <span>Assignments</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-plane-departure"></i>
+            <span>OJT</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-folder-open"></i>
+            <span>Documents</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Reports</span>
+        </button>
+
+        <button class="nav-item">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </button>
+
+    </nav>
+
+    <div class="sidebar-bottom">
+
+        <div class="user-mini">
+
+            <div class="user-avatar">
+                A
+            </div>
+
+            <div class="user-info">
+                <strong>Administrator</strong>
+                <span>System Administrator</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+<main class="main">
+
+    <header class="topbar">
+
+        <div style="display:flex; align-items:center; gap:14px;">
+
+            <button class="mobile-menu" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="page-heading">
+                <h1>Dashboard</h1>
+                <p>Aviation Training Hub Management System</p>
+            </div>
+
+        </div>
+
+        <div class="topbar-right">
+
+            <div class="notification">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <span class="dot"></span>
+
+            </div>
+
+            <div class="top-user">
+
+                <div class="top-user-avatar">
+                    A
+                </div>
+
+                <div class="top-user-text">
+                    <strong>Administrator</strong>
+                    <span>Admin Account</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <section class="content">
+
+        <div class="welcome-box">
+
+            <h2>Welcome to ATH Management System</h2>
+
+            <p>
+                Manage student admissions, academic programs, attendance,
+                aviation training, examinations, documents, fees and
+                institutional reports from one centralized platform.
+            </p>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon blue">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <span class="stat-change">
+                        +12%
+                    </span>
+
+                </div>
+
+                <div class="stat-number">
+                    1,248
+                </div>
+
+                <div class="stat-label">
+                    Total Students
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon red">
+                        <i class="fa-solid fa-user-clock"></i>
+                    </div>
+
+                    <span class="stat-change">
+                        +8%
+                    </span>
+
+                </div>
+
+                <div class="stat-number">
+                    86
+                </div>
+
+                <div class="stat-label">
+                    New Registrations
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon green">
+                        <i class="fa-solid fa-plane"></i>
+                    </div>
+
+                    <span class="stat-change">
+                        Active
+                    </span>
+
+                </div>
+
+                <div class="stat-number">
+                    24
+                </div>
+
+                <div class="stat-label">
+                    Active Batches
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon orange">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+
+                    <span class="stat-change">
+                        92%
+                    </span>
+
+                </div>
+
+                <div class="stat-number">
+                    PKR 8.4M
+                </div>
+
+                <div class="stat-label">
+                    Fee Collection
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="section-header">
+
+            <h3>Management Modules</h3>
+
+            <span>12 available modules</span>
+
+        </div>
+
+
+        <div class="module-grid">
+
+
+            <div class="module-card"
+                 onclick="showMessage('Dashboard')">
+
+                <div class="module-icon icon-blue">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+
+                <h4>Dashboard</h4>
+
+                <p>
+                    Overview of institutional activities,
+                    students and system statistics.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Enquiries')">
+
+                <div class="module-icon icon-orange">
+                    <i class="fa-solid fa-inbox"></i>
+                </div>
+
+                <h4>Enquiries</h4>
+
+                <p>
+                    Manage prospective student enquiries,
+                    follow-ups and admission leads.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <!-- STUDENT REGISTRATION -->
+
+            <div class="module-card registration"
+                 onclick="openRegistrationForm()">
+
+                <div class="module-icon icon-red">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+
+                <h4>Student Registration</h4>
+
+                <p>
+                    Register students, check eligibility,
+                    upload documents and generate student ID.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Programs and Modules')">
+
+                <div class="module-icon icon-purple">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+
+                <h4>Programs and Modules</h4>
+
+                <p>
+                    Manage programs, courses, subjects
+                    and academic modules.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Batches, Timetable and Attendance')">
+
+                <div class="module-icon icon-blue">
+                    <i class="fa-solid fa-calendar-days"></i>
+                </div>
+
+                <h4>Batches, Timetable & Attendance</h4>
+
+                <p>
+                    Manage class schedules, batches,
+                    instructors and attendance.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Fees and Accounts')">
+
+                <div class="module-icon icon-green">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <h4>Fees and Accounts</h4>
+
+                <p>
+                    Track admission fees, payments,
+                    vouchers and student accounts.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Exams, Results and Transcripts')">
+
+                <div class="module-icon icon-orange">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+
+                <h4>Exams, Results & Transcripts</h4>
+
+                <p>
+                    Manage examinations, marks,
+                    results and academic transcripts.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Assignments')">
+
+                <div class="module-icon icon-purple">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+
+                <h4>Assignments</h4>
+
+                <p>
+                    Manage student assignments,
+                    submissions and evaluations.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('OJT')">
+
+                <div class="module-icon icon-cyan">
+                    <i class="fa-solid fa-plane-departure"></i>
+                </div>
+
+                <h4>OJT</h4>
+
+                <p>
+                    Manage on-job training, flight training
+                    and practical training records.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Documents')">
+
+                <div class="module-icon icon-blue">
+                    <i class="fa-solid fa-folder-open"></i>
+                </div>
+
+                <h4>Documents</h4>
+
+                <p>
+                    Organize student documents,
+                    certificates and verification records.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Reports')">
+
+                <div class="module-icon icon-green">
+                    <i class="fa-solid fa-chart-column"></i>
+                </div>
+
+                <h4>Reports</h4>
+
+                <p>
+                    Generate academic, financial,
+                    attendance and operational reports.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+
+            <div class="module-card"
+                 onclick="showMessage('Settings')">
+
+                <div class="module-icon icon-orange">
+                    <i class="fa-solid fa-gear"></i>
+                </div>
+
+                <h4>Settings</h4>
+
+                <p>
+                    Manage system configuration,
+                    users, permissions and preferences.
+                </p>
+
+                <span class="module-arrow">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="lower-grid">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Recent Student Activity</h3>
+
+                    <button class="view-all"
+                            onclick="showMessage('Students')">
+                        View All
+                    </button>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Student</th>
+                                <th>Program</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+
+                                <td>
+                                    <strong>Ahmed Khan</strong>
+                                </td>
+
+                                <td>CPL</td>
+
+                                <td>24 Sep 2026</td>
+
+                                <td>
+                                    <span class="status active">
+                                        Active
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    <strong>Hina Aslam</strong>
+                                </td>
+
+                                <td>PPL</td>
+
+                                <td>23 Sep 2026</td>
+
+                                <td>
+                                    <span class="status pending">
+                                        Pending
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    <strong>Usman Ali</strong>
+                                </td>
+
+                                <td>Ground School</td>
+
+                                <td>22 Sep 2026</td>
+
+                                <td>
+                                    <span class="status review">
+                                        Review
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td>
+                                    <strong>Ayesha Malik</strong>
+                                </td>
+
+                                <td>IR</td>
+
+                                <td>21 Sep 2026</td>
+
+                                <td>
+                                    <span class="status active">
+                                        Active
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Quick Actions</h3>
+
+                </div>
+
+                <div class="quick-actions">
+
+                    <button class="quick-action"
+                            onclick="openRegistrationForm()">
+
+                        <div class="quick-action-icon">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+
+                        <span>
+                            New Registration
+                        </span>
+
+                    </button>
+
+
+                    <button class="quick-action"
+                            onclick="showMessage('New Enquiry')">
+
+                        <div class="quick-action-icon">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+
+                        <span>
+                            New Enquiry
+                        </span>
+
+                    </button>
+
+
+                    <button class="quick-action"
+                            onclick="showMessage('Fee Voucher')">
+
+                        <div class="quick-action-icon">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </div>
+
+                        <span>
+                            Fee Voucher
+                        </span>
+
+                    </button>
+
+
+                    <button class="quick-action"
+                            onclick="showMessage('Reports')">
+
+                        <div class="quick-action-icon">
+                            <i class="fa-solid fa-chart-column"></i>
+                        </div>
+
+                        <span>
+                            Generate Report
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script>
+
+function openRegistrationForm() {
+    window.location.href = "student-registration.html";
+}
+
+function showDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+function showMessage(moduleName) {
+    alert(moduleName + " module is ready to be connected.");
+}
+
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("open");
+}
+
+</script>
+
+</body>
+</html>
