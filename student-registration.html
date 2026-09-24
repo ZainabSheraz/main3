@@ -1,0 +1,2558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ATH - Student Registration</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #071a2b;
+    --navy-light: #103a58;
+    --red: #d71920;
+    --red-dark: #b91016;
+    --white: #ffffff;
+    --bg: #f4f7fa;
+    --text: #172333;
+    --muted: #718096;
+    --border: #e4e9ef;
+    --green: #16a085;
+    --blue: #2475d0;
+    --orange: #e58e26;
+    --purple: #7657d9;
+    --shadow: 0 8px 30px rgba(7,26,43,.08);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+
+/* ===============================
+   HEADER
+================================ */
+
+.topbar {
+    height: 82px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.brand img {
+    width: 135px;
+    max-height: 52px;
+    object-fit: contain;
+}
+
+.page-title {
+    border-left: 1px solid var(--border);
+    padding-left: 18px;
+}
+
+.page-title h1 {
+    font-size: 18px;
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.page-title p {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 4px;
+}
+
+.back-btn {
+    border: 1px solid var(--border);
+    background: white;
+    color: var(--navy);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+
+/* ===============================
+   PAGE
+================================ */
+
+.container {
+    max-width: 1400px;
+    margin: auto;
+    padding: 30px 35px 50px;
+}
+
+
+/* ===============================
+   STUDENT LIST HEADER
+================================ */
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.list-header h2 {
+    color: var(--navy);
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.list-header p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.new-registration-btn {
+    border: none;
+    background: var(--red);
+    color: white;
+    padding: 13px 18px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 7px 18px rgba(215,25,32,.2);
+}
+
+.new-registration-btn:hover {
+    background: var(--red-dark);
+    transform: translateY(-1px);
+}
+
+
+/* ===============================
+   SUMMARY CARDS
+================================ */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.summary-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary-icon.blue {
+    background: #eaf3ff;
+    color: var(--blue);
+}
+
+.summary-icon.red {
+    background: #fff0f1;
+    color: var(--red);
+}
+
+.summary-icon.green {
+    background: #e8f8f3;
+    color: var(--green);
+}
+
+.summary-number {
+    font-size: 23px;
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.summary-label {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+
+/* ===============================
+   STUDENT LIST
+================================ */
+
+.student-panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(7,26,43,.03);
+}
+
+.panel-toolbar {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.panel-toolbar h3 {
+    font-size: 14px;
+    color: var(--navy);
+}
+
+.search-box {
+    position: relative;
+    width: 270px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    color: #9aa7b5;
+    font-size: 12px;
+}
+
+.search-box input {
+    width: 100%;
+    height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 0 12px 0 33px;
+    font-family: inherit;
+    font-size: 10px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: var(--red);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-table th {
+    padding: 13px 20px;
+    text-align: left;
+    background: #fafbfc;
+    color: #8795a4;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.student-table td {
+    padding: 15px 20px;
+    border-top: 1px solid #edf0f3;
+    font-size: 10px;
+    color: #526170;
+}
+
+.student-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.student-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #eef3f7;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 11px;
+}
+
+.student-name strong {
+    display: block;
+    color: var(--navy);
+    font-size: 11px;
+}
+
+.student-name span {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    margin-top: 2px;
+}
+
+.status {
+    display: inline-flex;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 8px;
+    font-weight: 700;
+}
+
+.status.active {
+    background: #e8f8f1;
+    color: #168c64;
+}
+
+.empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.empty-state i {
+    font-size: 38px;
+    color: #c8d1da;
+    margin-bottom: 15px;
+}
+
+.empty-state h3 {
+    color: var(--navy);
+    font-size: 14px;
+    margin-bottom: 7px;
+}
+
+.empty-state p {
+    font-size: 10px;
+}
+
+
+/* ===============================
+   FORM SECTION
+================================ */
+
+#registrationFormSection {
+    display: none;
+}
+
+.form-heading {
+    margin-bottom: 25px;
+}
+
+.form-heading h2 {
+    font-size: 23px;
+    color: var(--navy);
+    font-weight: 800;
+}
+
+.form-heading p {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.form-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.form-card-header {
+    background: #fafbfc;
+    border-bottom: 1px solid var(--border);
+    padding: 17px 22px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.form-card-header .number {
+    width: 27px;
+    height: 27px;
+    border-radius: 7px;
+    background: var(--red);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.form-card-header h3 {
+    color: var(--navy);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.form-body {
+    padding: 24px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    color: #536272;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.form-group label span {
+    color: var(--red);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid #dce3e9;
+    border-radius: 7px;
+    height: 40px;
+    padding: 0 12px;
+    outline: none;
+    font-family: inherit;
+    font-size: 10px;
+    color: var(--text);
+    background: white;
+}
+
+.form-group textarea {
+    height: 85px;
+    padding-top: 11px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(215,25,32,.06);
+}
+
+.photo-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 22px;
+}
+
+.photo-preview {
+    width: 85px;
+    height: 85px;
+    border-radius: 10px;
+    border: 1px dashed #cbd5de;
+    background: #fafbfc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.photo-preview i {
+    font-size: 25px;
+    color: #b7c2cd;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-info strong {
+    display: block;
+    font-size: 11px;
+    color: var(--navy);
+    margin-bottom: 5px;
+}
+
+.photo-info span {
+    display: block;
+    font-size: 9px;
+    color: var(--muted);
+}
+
+.file-box {
+    border: 1px dashed #ccd6df;
+    border-radius: 8px;
+    padding: 14px;
+    background: #fafbfc;
+}
+
+.file-box input {
+    border: none;
+    height: auto;
+    padding: 0;
+    background: transparent;
+}
+
+.eligibility-box {
+    margin-top: 20px;
+    padding: 17px;
+    border-radius: 9px;
+    background: #f7f9fb;
+    border: 1px solid var(--border);
+}
+
+.eligibility-box h4 {
+    color: var(--navy);
+    font-size: 11px;
+    margin-bottom: 6px;
+}
+
+.eligibility-box p {
+    color: var(--muted);
+    font-size: 9px;
+    line-height: 1.6;
+}
+
+.eligibility-result {
+    display: none;
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.eligible {
+    display: block;
+    background: #e8f8f1;
+    color: #168c64;
+}
+
+.not-eligible {
+    display: block;
+    background: #fff0f1;
+    color: var(--red);
+}
+
+.manual-review {
+    display: block;
+    background: #fff5e6;
+    color: #b36d13;
+}
+
+
+/* ===============================
+   FEE
+================================ */
+
+.fee-box {
+    background: linear-gradient(120deg, #071a2b, #103a58);
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fee-box span {
+    color: #b7c7d7;
+    font-size: 10px;
+}
+
+.fee-box strong {
+    display: block;
+    margin-top: 5px;
+    font-size: 22px;
+}
+
+
+/* ===============================
+   FORM BUTTONS
+================================ */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.cancel-btn,
+.save-btn {
+    padding: 12px 19px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: white;
+    color: var(--navy);
+    border: 1px solid var(--border);
+}
+
+.save-btn {
+    background: var(--red);
+    color: white;
+    border: none;
+}
+
+.save-btn:hover {
+    background: var(--red-dark);
+}
+
+
+/* ===============================
+   SUCCESS MODAL
+================================ */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(7,26,43,.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    width: 430px;
+    max-width: 100%;
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+}
+
+.success-icon {
+    width: 60px;
+    height: 60px;
+    background: #e8f8f1;
+    color: var(--green);
+    border-radius: 50%;
+    margin: auto auto 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.modal-box h2 {
+    color: var(--navy);
+    font-size: 19px;
+    margin-bottom: 7px;
+}
+
+.modal-box p {
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.student-id {
+    margin: 18px 0;
+    background: #f5f7f9;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 15px;
+}
+
+.student-id span {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    margin-bottom: 5px;
+}
+
+.student-id strong {
+    color: var(--red);
+    font-size: 19px;
+}
+
+.modal-btn {
+    width: 100%;
+    border: none;
+    background: var(--red);
+    color: white;
+    border-radius: 8px;
+    padding: 12px;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media(max-width: 900px) {
+
+    .topbar {
+        padding: 0 20px;
+    }
+
+    .container {
+        padding: 25px 20px;
+    }
+
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width: 600px) {
+
+    .page-title {
+        display: none;
+    }
+
+    .list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .fee-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ==========================================
+     TOP HEADER
+=========================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <img src="ath-logo.png" alt="Aviation Training Hub">
+
+        <div class="page-title">
+
+            <h1>Student Registration</h1>
+
+            <p>
+                Aviation Training Hub Management System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <button class="back-btn" onclick="goDashboard()">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Dashboard
+
+    </button>
+
+</header>
+
+
+<div class="container">
+
+
+<!-- ==========================================
+     STUDENT LIST SECTION
+=========================================== -->
+
+<section id="studentListSection">
+
+
+    <div class="list-header">
+
+        <div>
+
+            <h2>Registered Students</h2>
+
+            <p>
+                View and manage students registered in the ATH system.
+            </p>
+
+        </div>
+
+
+        <button class="new-registration-btn"
+                onclick="showRegistrationForm()">
+
+            <i class="fa-solid fa-user-plus"></i>
+
+            New Student Registration
+
+        </button>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="summary-grid">
+
+        <div class="summary-card">
+
+            <div class="summary-icon blue">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <div>
+
+                <div class="summary-number"
+                     id="totalStudents">
+                    0
+                </div>
+
+                <div class="summary-label">
+                    Total Registered Students
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon red">
+
+                <i class="fa-solid fa-user-plus"></i>
+
+            </div>
+
+            <div>
+
+                <div class="summary-number"
+                     id="newStudents">
+                    0
+                </div>
+
+                <div class="summary-label">
+                    New Registrations
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-icon green">
+
+                <i class="fa-solid fa-user-check"></i>
+
+            </div>
+
+            <div>
+
+                <div class="summary-number"
+                     id="activeStudents">
+                    0
+                </div>
+
+                <div class="summary-label">
+                    Active Students
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- STUDENT TABLE -->
+
+    <div class="student-panel">
+
+        <div class="panel-toolbar">
+
+            <h3>Student Records</h3>
+
+            <div class="search-box">
+
+                <i class="fa-solid fa-search"></i>
+
+                <input
+                    type="text"
+                    id="studentSearch"
+                    placeholder="Search student name..."
+                    oninput="renderStudents()">
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table class="student-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student</th>
+
+                        <th>Student ID</th>
+
+                        <th>Program</th>
+
+                        <th>Campus</th>
+
+                        <th>Registration Date</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="studentTableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==========================================
+     REGISTRATION FORM
+=========================================== -->
+
+<section id="registrationFormSection">
+
+
+    <div class="form-heading">
+
+        <h2>New Student Registration</h2>
+
+        <p>
+            Complete all required information to register a new student.
+        </p>
+
+    </div>
+
+
+    <form id="registrationForm">
+
+
+        <!-- PERSONAL INFORMATION -->
+
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="number">01</div>
+
+                <h3>Personal Information</h3>
+
+            </div>
+
+
+            <div class="form-body">
+
+
+                <div class="photo-box">
+
+                    <div class="photo-preview"
+                         id="photoPreview">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+
+                    <div class="photo-info">
+
+                        <strong>Student Photograph</strong>
+
+                        <span>
+                            Upload a recent passport-size photograph.
+                        </span>
+
+                        <input
+                            type="file"
+                            id="studentPhoto"
+                            accept="image/*"
+                            style="margin-top:8px;font-size:9px;"
+                            onchange="previewPhoto(event)">
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Full Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Father's / Guardian Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="guardianName"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Date of Birth <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dob"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Gender <span>*</span></label>
+
+                        <select id="gender" required>
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            CNIC / B-Form <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="cnic"
+                            placeholder="XXXXX-XXXXXXX-X"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Nationality</label>
+
+                        <input
+                            type="text"
+                            id="nationality"
+                            value="Pakistani">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>CNIC / B-Form Issue Date</label>
+
+                        <input
+                            type="date"
+                            id="cnicIssue">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>CNIC / B-Form Expiry Date</label>
+
+                        <input
+                            type="date"
+                            id="cnicExpiry">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Marital Status</label>
+
+                        <select id="maritalStatus">
+
+                            <option value="">
+                                Select Status
+                            </option>
+
+                            <option>Single</option>
+                            <option>Married</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTACT DETAILS -->
+
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="number">02</div>
+
+                <h3>Contact Details</h3>
+
+            </div>
+
+
+            <div class="form-body">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Mobile Number <span>*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="mobile"
+                            placeholder="+92 3XX XXXXXXX"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>WhatsApp Number</label>
+
+                        <input
+                            type="tel"
+                            id="whatsapp">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email Address <span>*</span>
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Current Address <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="currentAddress"
+                            required></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <label>
+                            Permanent Address <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="permanentAddress"
+                            required></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Next of Kin Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nextOfKin">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Next of Kin Relation
+                        </label>
+
+                        <input
+                            type="text"
+                            id="kinRelation">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Next of Kin Contact Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="kinContact">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Emergency Contact Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="emergencyContact">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMISSION DETAILS -->
+
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="number">03</div>
+
+                <h3>Admission Details</h3>
+
+            </div>
+
+
+            <div class="form-body">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Campus <span>*</span>
+                        </label>
+
+                        <select id="campus" required>
+
+                            <option value="">
+                                Select Campus
+                            </option>
+
+                            <option>ATH Main Campus</option>
+                            <option>Islamabad Campus</option>
+                            <option>Rawalpindi Campus</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            School <span>*</span>
+                        </label>
+
+                        <select id="school" required>
+
+                            <option value="">
+                                Select School
+                            </option>
+
+                            <option>School of Aviation</option>
+                            <option>School of Computing</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Program <span>*</span>
+                        </label>
+
+                        <select id="program" required>
+
+                            <option value="">
+                                Select Program
+                            </option>
+
+                            <option>HND</option>
+                            <option>BSc Aviation</option>
+                            <option>Computer Science</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Course Applied For <span>*</span>
+                        </label>
+
+                        <select id="courseApplied" required>
+
+                            <option value="">
+                                Select Course
+                            </option>
+
+                            <option>PPL</option>
+                            <option>CPL</option>
+                            <option>IR</option>
+                            <option>Ground School</option>
+                            <option>Recurrent</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            PCAA Reference Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="pcaaReference">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Previous License / Rating Held
+                        </label>
+
+                        <input
+                            type="text"
+                            id="previousLicense">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- EDUCATIONAL BACKGROUND -->
+
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="number">04</div>
+
+                <h3>Educational Background & Eligibility</h3>
+
+            </div>
+
+
+            <div class="form-body">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Highest Qualification <span>*</span>
+                        </label>
+
+                        <select
+                            id="qualification"
+                            onchange="checkEligibility()"
+                            required>
+
+                            <option value="">
+                                Select Qualification
+                            </option>
+
+                            <option>FSc</option>
+                            <option>A-Levels</option>
+                            <option>Level 3</option>
+                            <option>Intermediate</option>
+                            <option>Other</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Institution Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="institution"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Year of Passing <span>*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="passingYear"
+                            min="1950"
+                            max="2100"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Marks / Percentage <span>*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            id="marks"
+                            min="0"
+                            max="100"
+                            placeholder="e.g. 72"
+                            oninput="checkEligibility()"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Grade</label>
+
+                        <input
+                            type="text"
+                            id="grade">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Certificates Attached</label>
+
+                        <select id="certificatesAttached">
+
+                            <option>Yes</option>
+                            <option>No</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="eligibility-box">
+
+                    <h4>
+                        HND Preliminary Eligibility Check
+                    </h4>
+
+                    <p>
+                        The current prototype checks HND eligibility using
+                        the requirement provided for this system:
+                        FSc, A-Levels or Level 3, or Intermediate with
+                        60% or above.
+                    </p>
+
+                    <div
+                        id="eligibilityResult"
+                        class="eligibility-result">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- AVIATION INFORMATION -->
+
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="number">05</div>
+
+                <h3>Aviation Information</h3>
+
+            </div>
+
+
+            <div class="form-body">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Medical Certificate Status
+                        </label>
+
+                        <select id="medicalStatus">
+
+                            <option>Not Yet Obtained</option>
+                            <option>Class 1</option>
+                            <option>Class 2</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Medical Certificate Expiry Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="medicalExpiry">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Previous Flying Hours
+                        </label>
+
+                        <input
+                            type="text"
+                            id="flyingHours"
+                            placeholder="e.g. 125 hours">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Flying Hours Type
+                        </label>
+
+                        <input
+                            type="text"
+                            id="flyingType"
+                            placeholder="Single / Multi Engine">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Flying Hours Recency
+                        </label>
+
+                        <input
+                            type="text"
+                            id="flyingRecency">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Local Police Verification
+                        </label>
+
+                        <select id="policeVerification">
+
+                            <option>Pending</option>
+                            <option>Completed</option>
+                            <option>Not Required</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DOCUMENTS -->
+
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="number">06</div>
+
+                <h3>Required Documents</h3>
+
+            </div>
+
+
+            <div class="form-body">
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label>
+                            CNIC / B-Form
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                id="cnicDocument">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Qualification Certificate
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                id="qualificationDocument">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Marks Sheet
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                id="marksDocument">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Medical Certificate
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                id="medicalDocument">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Police Verification
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                id="policeDocument">
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            PCAA Document
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                id="pcaaDocument">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMISSION FEE -->
+
+        <div class="form-card">
+
+            <div class="form-card-header">
+
+                <div class="number">07</div>
+
+                <h3>Admission Fee</h3>
+
+            </div>
+
+
+            <div class="form-body">
+
+
+                <div class="fee-box">
+
+                    <div>
+
+                        <span>
+                            Admission Fee
+                        </span>
+
+                        <strong>
+                            PKR 150,000
+                        </strong>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-file-invoice-dollar"
+                       style="font-size:28px;color:#ffffff;">
+                    </i>
+
+                </div>
+
+
+                <div
+                    class="form-grid"
+                    style="margin-top:20px;">
+
+                    <div class="form-group">
+
+                        <label>Fee Status</label>
+
+                        <select id="feeStatus">
+
+                            <option>Pending</option>
+                            <option>Paid</option>
+                            <option>Partially Paid</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Voucher Number</label>
+
+                        <input
+                            type="text"
+                            id="voucherNumber">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>Payment Reference</label>
+
+                        <input
+                            type="text"
+                            id="paymentReference">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="form-actions">
+
+            <button
+                type="button"
+                class="cancel-btn"
+                onclick="showStudentList()">
+
+                Cancel
+
+            </button>
+
+
+            <button
+                type="button"
+                class="save-btn"
+                onclick="saveRegistration()">
+
+                <i class="fa-solid fa-check"></i>
+
+                Complete Registration
+
+            </button>
+
+        </div>
+
+
+    </form>
+
+</section>
+
+</div>
+
+
+<!-- ==========================================
+     SUCCESS MODAL
+=========================================== -->
+
+<div class="modal" id="successModal">
+
+    <div class="modal-box">
+
+        <div class="success-icon">
+
+            <i class="fa-solid fa-check"></i>
+
+        </div>
+
+
+        <h2>
+            Registration Successful
+        </h2>
+
+
+        <p>
+            The student has been successfully registered
+            in the ATH Management System.
+        </p>
+
+
+        <div class="student-id">
+
+            <span>
+                Generated Student ID
+            </span>
+
+            <strong id="generatedStudentId">
+                ATH-2026-0001
+            </strong>
+
+        </div>
+
+
+        <button
+            class="modal-btn"
+            onclick="closeSuccessModal()">
+
+            View Registered Students
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   DASHBOARD
+=========================================== */
+
+function goDashboard() {
+    window.location.href = "dashboard.html";
+}
+
+
+/* ==========================================
+   SHOW REGISTRATION FORM
+=========================================== */
+
+function showRegistrationForm() {
+
+    document.getElementById("studentListSection").style.display = "none";
+
+    document.getElementById("registrationFormSection").style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* ==========================================
+   SHOW STUDENT LIST
+=========================================== */
+
+function showStudentList() {
+
+    document.getElementById("registrationFormSection").style.display = "none";
+
+    document.getElementById("studentListSection").style.display = "block";
+
+    renderStudents();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* ==========================================
+   PHOTO PREVIEW
+=========================================== */
+
+function previewPhoto(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        document.getElementById("photoPreview").innerHTML =
+            `<img src="${e.target.result}" alt="Student Photo">`;
+
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
+/* ==========================================
+   ELIGIBILITY CHECK
+=========================================== */
+
+function checkEligibility() {
+
+    const qualification =
+        document.getElementById("qualification").value;
+
+    const marks =
+        parseFloat(document.getElementById("marks").value);
+
+    const result =
+        document.getElementById("eligibilityResult");
+
+    if (!qualification) {
+
+        result.style.display = "none";
+
+        return;
+    }
+
+
+    if (
+        qualification === "FSc" ||
+        qualification === "A-Levels" ||
+        qualification === "Level 3"
+    ) {
+
+        result.className =
+            "eligibility-result eligible";
+
+        result.textContent =
+            "✓ Preliminary eligibility: Eligible based on the selected qualification.";
+
+        return;
+    }
+
+
+    if (
+        qualification === "Intermediate" &&
+        !isNaN(marks)
+    ) {
+
+        if (marks >= 60) {
+
+            result.className =
+                "eligibility-result eligible";
+
+            result.textContent =
+                "✓ Preliminary eligibility: Eligible — Intermediate marks are 60% or above.";
+
+        } else {
+
+            result.className =
+                "eligibility-result not-eligible";
+
+            result.textContent =
+                "✕ Preliminary eligibility: Not eligible — Intermediate marks are below 60%.";
+
+        }
+
+        return;
+    }
+
+
+    result.className =
+        "eligibility-result manual-review";
+
+    result.textContent =
+        "⚠ Manual review required for the selected qualification.";
+
+}
+
+
+/* ==========================================
+   GET STUDENTS
+=========================================== */
+
+function getStudents() {
+
+    return JSON.parse(
+        localStorage.getItem("ath_students") || "[]"
+    );
+
+}
+
+
+/* ==========================================
+   SAVE REGISTRATION
+=========================================== */
+
+function saveRegistration() {
+
+    const form =
+        document.getElementById("registrationForm");
+
+
+    if (!form.checkValidity()) {
+
+        form.reportValidity();
+
+        return;
+    }
+
+
+    const fullName =
+        document.getElementById("fullName").value.trim();
+
+    const program =
+        document.getElementById("program").value;
+
+    const campus =
+        document.getElementById("campus").value;
+
+
+    const students =
+        getStudents();
+
+
+    /* Generate sequential student ID */
+
+    const nextNumber =
+        students.length + 1;
+
+
+    const studentId =
+        "ATH-" +
+        new Date().getFullYear() +
+        "-" +
+        String(nextNumber).padStart(4, "0");
+
+
+    const student = {
+
+        id: studentId,
+
+        name: fullName,
+
+        guardian:
+            document.getElementById("guardianName").value,
+
+        program: program,
+
+        campus: campus,
+
+        school:
+            document.getElementById("school").value,
+
+        course:
+            document.getElementById("courseApplied").value,
+
+        mobile:
+            document.getElementById("mobile").value,
+
+        email:
+            document.getElementById("email").value,
+
+        cnic:
+            document.getElementById("cnic").value,
+
+        status: "Active",
+
+        registrationDate:
+            new Date().toLocaleDateString(
+                "en-GB",
+                {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }
+            )
+
+    };
+
+
+    students.push(student);
+
+
+    localStorage.setItem(
+        "ath_students",
+        JSON.stringify(students)
+    );
+
+
+    document.getElementById(
+        "generatedStudentId"
+    ).textContent = studentId;
+
+
+    document.getElementById(
+        "successModal"
+    ).classList.add("show");
+
+}
+
+
+/* ==========================================
+   CLOSE SUCCESS MODAL
+=========================================== */
+
+function closeSuccessModal() {
+
+    document.getElementById(
+        "successModal"
+    ).classList.remove("show");
+
+
+    document.getElementById(
+        "registrationForm"
+    ).reset();
+
+
+    document.getElementById(
+        "photoPreview"
+    ).innerHTML =
+        `<i class="fa-solid fa-user"></i>`;
+
+
+    document.getElementById(
+        "eligibilityResult"
+    ).style.display = "none";
+
+
+    showStudentList();
+
+}
+
+
+/* ==========================================
+   RENDER STUDENTS
+=========================================== */
+
+function renderStudents() {
+
+    const students =
+        getStudents();
+
+
+    const tbody =
+        document.getElementById(
+            "studentTableBody"
+        );
+
+
+    const search =
+        document.getElementById(
+            "studentSearch"
+        ).value.toLowerCase();
+
+
+    const filtered =
+        students.filter(student =>
+            student.name
+                .toLowerCase()
+                .includes(search)
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    if (filtered.length === 0) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="6">
+
+                    <div class="empty-state">
+
+                        <i class="fa-solid fa-user-graduate"></i>
+
+                        <h3>
+                            No Registered Students
+                        </h3>
+
+                        <p>
+                            Click "New Student Registration"
+                            to register the first student.
+                        </p>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    } else {
+
+        filtered.forEach(student => {
+
+            const initials =
+                student.name
+                    .split(" ")
+                    .map(word => word[0])
+                    .slice(0, 2)
+                    .join("")
+                    .toUpperCase();
+
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="student-name">
+
+                        <div class="student-avatar">
+                            ${initials}
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                ${escapeHTML(student.name)}
+                            </strong>
+
+                            <span>
+                                ${escapeHTML(student.mobile)}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+                    <strong>
+                        ${escapeHTML(student.id)}
+                    </strong>
+                </td>
+
+
+                <td>
+                    ${escapeHTML(student.program)}
+                </td>
+
+
+                <td>
+                    ${escapeHTML(student.campus)}
+                </td>
+
+
+                <td>
+                    ${escapeHTML(student.registrationDate)}
+                </td>
+
+
+                <td>
+
+                    <span class="status active">
+                        ${escapeHTML(student.status)}
+                    </span>
+
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        });
+
+    }
+
+
+    /* Update summary numbers */
+
+    document.getElementById(
+        "totalStudents"
+    ).textContent = students.length;
+
+
+    document.getElementById(
+        "newStudents"
+    ).textContent = students.length;
+
+
+    document.getElementById(
+        "activeStudents"
+    ).textContent =
+        students.filter(
+            student => student.status === "Active"
+        ).length;
+
+}
+
+
+/* ==========================================
+   SECURITY HELPER
+=========================================== */
+
+function escapeHTML(value) {
+
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* ==========================================
+   INITIAL LOAD
+=========================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        renderStudents();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
